@@ -127,6 +127,7 @@ public class ROS : ModuleRules
             includeAdd("ROS_JADE_INCLUDE_PATHS");
 
             PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_160_64_LIB")); //boost will automatically bring in static libs. 
+            PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_160_64_LIB")); //boost will automatically bring in static libs. 
 
 			//ModuleDirectory + \x64\Rel-64-15\rosjadecpp-r-2015.lib"
 			
@@ -137,15 +138,15 @@ public class ROS : ModuleRules
             //rebuild with tf is ok, and if you reference a tf item, you get tf2 missing items because tf calls tf2.
             PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\x64\Rel-64-15\TFShared-r-2015.lib");
             PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\x64\Rel-64-15\rosbag-r-2015.lib");
-            Console.WriteLine("**"+Path.Combine(ModuleDirectory + @"\Shared\x64\rosjadecpp-r-2015.dll"));
+            Console.WriteLine("**"+Path.Combine(ModuleDirectory + @"\bin\x64\rosjadecpp-r-2015.dll"));
 
-            string fname = Path.Combine(ModuleDirectory + @"\Shared\x64\rosjadecpp-r-2015.dll");
+            string fname = Path.Combine(ModuleDirectory + @"\bin\x64\rosjadecpp-r-2015.dll");
             PublicDelayLoadDLLs.Add(fname);
             RuntimeDependencies.Add(new RuntimeDependency(fname));
-			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\Shared\x64\ROSJadeInterop-r-2015.dll")));
-			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\Shared\x64\ROSActionlib-r-2015.dll")));
-			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\Shared\x64\TFShared-r-2015.dll")));
-            RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\Shared\x64\rosbag-r-2015.dll")));
+			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\x64\ROSJadeInterop-r-2015.dll")));
+			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\x64\ROSActionlib-r-2015.dll")));
+			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\x64\TFShared-r-2015.dll")));
+            RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\x64\rosbag-r-2015.dll")));
 
 
         }
