@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--GearVR plugin additions-->
+<root xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- init section is always evaluated once per architecture -->
+  <init>
+  
+  </init>
+
+  <!-- optional updates applied to AndroidManifest.xml -->
+  <androidManifestUpdates>
+ 
+  </androidManifestUpdates>
+
+  <!-- optional additions to proguard -->
+  <proguardAdditions>
+    <insert>
+
+    </insert>
+  </proguardAdditions>
+
+  <!-- optional files or directories to copy to Intermediate/Android/APK -->
+  <resourceCopies>
+   		<isArch arch="armeabi-v7a">
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\libgregtest2.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\libgregtest2.so" />
+						
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\libconsole_bridge.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\libconsole_bridge.so" />		
+
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\libcpp_common.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\libcpp_common.so" />		
+
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\librosconsole_backend_interface.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\librosconsole_backend_interface.so" />		
+
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\librosconsole_print.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\librosconsole_print.so" />		
+						
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\libroscpp.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\libroscpp.so" />		
+						
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\libroscpp_serialization.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\libroscpp_serialization.so" />		
+
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\librostime.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\librostime.so" />		
+
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\libxmlrpcpp.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\libxmlrpcpp.so" />		
+
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\librosconsole.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\librosconsole.so" />		
+																			   
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\libROSTF_Android.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\libROSTF_Android.so" />								
+						
+
+
+						
+		</isArch>
+  </resourceCopies>
+
+  
+	<gameActivityImportAdditions>
+	<insert>
+
+	import android.content.Context;
+	import android.net.wifi.WifiManager;
+	import java.nio.ByteOrder;
+	import java.net.InetAddress;
+	import java.net.UnknownHostException;
+	import java.math.BigInteger;
+
+	</insert>
+	</gameActivityImportAdditions>
+	
+
+  <!-- optional additions to the GameActivity class in GameActivity.java -->
+  <gameActivityClassAdditions>
+    <insert>
+   public static boolean AndroidThunkJava_Test1()
+	{
+		return true;
+	}
+	
+	public   String AndroidThunkJava_Test2()
+    {
+		String s;
+		s="foobat";
+		
+		return s;
+	}
+	
+   public   String AndroidThunkJava_wifiIpAddress()//Context context)
+    {
+
+
+        Context context= getApplicationContext();
+
+        WifiManager wifiManager = (WifiManager) context.getSystemService(WIFI_SERVICE);
+        int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
+
+        // Convert little-endian to big-endianif needed
+        if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
+            ipAddress = Integer.reverseBytes(ipAddress);
+        }
+
+        byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
+
+        String ipAddressString;
+        try {
+            ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
+        } catch (UnknownHostException ex)
+        {
+      //      Log.e("WIFIIP", "Unable to get host address.");
+            ipAddressString = "exception!";
+        }
+
+        return ipAddressString;
+    }
+
+	
+    </insert>
+  </gameActivityClassAdditions>
+
+  <!-- optional additions to GameActivity onCreate metadata reading in GameActivity.java -->
+  <gameActivityReadMetadataAdditions>
+   
+  </gameActivityReadMetadataAdditions>
+
+  <!-- optional additions to GameActivity onCreate in GameActivity.java
+	<gameActivityOnCreateAdditions>
+	</gameActivityOnCreateAdditions>
+	-->
+
+  <!-- optional additions to GameActivity onDestroy in GameActivity.java
+	<gameActivityOnDestroyAdditions>
+	</gameActivityOnDestroyAdditions>
+	-->
+
+  <!-- optional additions to GameActivity onStart in GameActivity.java
+	<gameActivityOnStartAdditions>
+	</gameActivityOnStartAdditions>
+	-->
+
+  <!-- optional additions to GameActivity onStop in GameActivity.java
+	<gameActivityOnStopAdditions>
+	</gameActivityOnStopAdditions>
+	-->
+
+  <!-- optional additions to GameActivity onPause in GameActivity.java
+	<gameActivityOnPauseAdditions>
+	</gameActivityOnPauseAdditions>
+	-->
+
+  <!-- optional additions to GameActivity onResume in GameActivity.java
+	<gameActivityOnResumeAdditions>
+	</gameActivityOnResumeAdditions>
+	-->
+
+  <!-- optional additions to GameActivity onActivityResult in GameActivity.java
+	<gameActivityOnActivityResultAdditions>
+	</gameActivityOnActivityResultAdditions>
+	-->
+
+  <!-- optional libraries to load in GameActivity.java before libUE4.so -->
+  <soLoadLibrary>
+		<loadLibrary name="gregtest2" failmsg="Failed to load myso library" />
+  </soLoadLibrary>
+</root>

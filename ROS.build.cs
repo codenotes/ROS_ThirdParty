@@ -126,7 +126,7 @@ public class ROS : ModuleRules
             includeAdd("BOOST_160_INCLUDE");
             includeAdd("ROS_JADE_INCLUDE_PATHS");
 
-            PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_160_64_LIB")); //boost will automatically bring in static libs. 
+            
             PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_160_64_LIB")); //boost will automatically bring in static libs. 
 
 			//ModuleDirectory + \x64\Rel-64-15\rosjadecpp-r-2015.lib"
@@ -206,21 +206,21 @@ public class ROS : ModuleRules
             string p;
 
 
-            p = ModuleDirectory + @"Lib\armeabi-v7a\libgregtest2.so";
+            p = ModuleDirectory + @"\Lib\armeabi-v7a\libgregtest2.so";
             PublicAdditionalLibraries.Add(p);
 
             //libconsole_bridge.so libcpp_common.so librosconsole.so librosconsole_backend_interface.so librosconsole_print.so libroscpp.so libroscpp_serialization.so librostime.so libxmlrpcpp.so
 
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\libconsole_bridge.so");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\libcpp_common.so");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\librosconsole.so");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\librosconsole_backend_interface.so");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\librosconsole_print.so");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\libroscpp.so");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\libroscpp_serialization.so");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\librostime.so");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\libxmlrpcpp.so");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"ROS\lib\armeabi-v7a\libROSTF_Android.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\libconsole_bridge.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\libcpp_common.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\librosconsole.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\librosconsole_backend_interface.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\librosconsole_print.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\libroscpp.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\libroscpp_serialization.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\librostime.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\libxmlrpcpp.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\libROSTF_Android.so");
 
 
 
