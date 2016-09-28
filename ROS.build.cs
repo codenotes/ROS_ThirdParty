@@ -1,5 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Se ttings.
-
+//NOTE: You need androidlibs cloned and ANDROIDLIBS_ROOT and ANDROID_ROS_BOOST_LOCATION to whever that is
 using UnrealBuildTool;
 using System.IO;
 using System;
