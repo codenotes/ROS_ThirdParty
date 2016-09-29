@@ -163,10 +163,15 @@ public class ROS : ModuleRules
         if (Target.Platform == UnrealTargetPlatform.Android)
         {
 
-       
+			Console.WriteLine("Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnnVars");
 
             includeAdd("ANDROIDLIBS_ROOT");
             string root = Environment.GetEnvironmentVariable("ANDROIDLIBS_ROOT");
+			string epic_install = Environment.GetEnvironmentVariable("EPIC_INSTALL");
+			string epic_android_path=Path.Combine(epic_install,@"Engine\Source\Runtime\Launch\Public\Android\");
+			
+			PublicIncludePaths.Add(epic_android_path);
+			
 
             PublicIncludePaths.Add(Path.Combine(root, @"\boost-android\boost_1_55_0"));
             PublicIncludePaths.Add(Path.Combine(root, @"ros\install_isolated\include"));
@@ -176,7 +181,7 @@ public class ROS : ModuleRules
             PublicIncludePaths.Add(Path.Combine(root, @"ros-android-src\ros-android\ros\src\geometry"));
             PublicIncludePaths.Add(Path.Combine(root, @"ros\install_isolated\include"));
 
-
+//Engine\Source\Runtime\Launch\Public\Android\AndroidJNI.h
             //string s=root+   @"\ros\install_isolated\include\include_generated";
             //PublicIncludePaths.Add(s); //untested
             //C:\androidlibs\boost-android\boost_1_55_0\boost\math\special_functions\round.hpp
