@@ -226,6 +226,7 @@ public class ROS : ModuleRules
             PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\librostime.so");
             PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\libxmlrpcpp.so");
             PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\libROSTF_Android.so");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\lib\armeabi-v7a\libRosInteropAndroid.so");
 
 
 
