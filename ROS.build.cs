@@ -163,7 +163,7 @@ public class ROS : ModuleRules
         if (Target.Platform == UnrealTargetPlatform.Android)
         {
 
-			Console.WriteLine("Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnnVars");
+			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnnVars");
 
             includeAdd("ANDROIDLIBS_ROOT");
             string root = Environment.GetEnvironmentVariable("ANDROIDLIBS_ROOT");
@@ -200,7 +200,7 @@ public class ROS : ModuleRules
 
             string PluginPath = Utils.MakePathRelativeTo(ModuleDirectory, BuildConfiguration.RelativeEnginePath);
             AdditionalPropertiesForReceipt.Add(new ReceiptProperty("AndroidPlugin", Path.Combine(PluginPath, "GameActivityInsert.xml"))); //../../../../repos/UDPUnreal\Source\UDPSendReceive\GregAndroidTest1.xml
-            Console.WriteLine(Path.Combine(PluginPath, "GameActivityInsert.xml"));
+            Console.WriteLine("^Path {0}:", Path.Combine(PluginPath, "GameActivityInsert.xml"));
 
             //ThirdParty in this case is relative to our module directory which gets interpreted often as: 'C:/repos/android/ROS/ThirdParty/' per the above properties
 
