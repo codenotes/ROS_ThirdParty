@@ -54,6 +54,9 @@
 			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\libROSTF_Android.so"
 						dst="$S(BuildDir)\libs\armeabi-v7a\libROSTF_Android.so" />								
 						
+			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\lib\armeabi-v7a\libRosInteropAndroid.so"
+						dst="$S(BuildDir)\libs\armeabi-v7a\libRosInteropAndroid.so" />	
+						
 
 
 						

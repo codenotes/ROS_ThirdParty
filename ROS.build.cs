@@ -68,7 +68,7 @@ public class ROS : ModuleRules
       
 		Type = ModuleType.External;
 
-        Console.WriteLine("iterating through Definitions...");
+        Console.WriteLine("^...iterating through Definitions...");
 
         foreach(string s in Definitions)
         {
@@ -122,6 +122,8 @@ public class ROS : ModuleRules
 
         if (Target.Platform == UnrealTargetPlatform.Win64)
         {
+			
+			Console.WriteLine("^In Win64 Build");
 
             includeAdd("BOOST_160_INCLUDE");
             includeAdd("ROS_JADE_INCLUDE_PATHS");
@@ -162,6 +164,7 @@ public class ROS : ModuleRules
 
         if (Target.Platform == UnrealTargetPlatform.Android)
         {
+			Console.WriteLine("!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################");
 
 			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnnVars");
 
