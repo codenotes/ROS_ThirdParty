@@ -1,0 +1,3 @@
+libs in this directory deprecated or windows-specific...look in android for android
+
+Also, all the boost android libraries here but I may or may not need them.  But cant hurt to have them there.

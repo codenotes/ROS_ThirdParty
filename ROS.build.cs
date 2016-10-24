@@ -119,28 +119,37 @@ public class ROS : ModuleRules
         var ros_preproc = "OPENCV;_NO_FTDI;BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY;GREG1;BOOST_LIB_DIAGNOSTIC";// ;BOOST_LIB_DIAGNOSTIC";
         addPreproc(ros_preproc);
 
+		
+        if (Target.Platform == UnrealTargetPlatform.Android || Target.Platform == UnrealTargetPlatform.Win64)
+        {
+
+           
+            includeAdd("ROS_JADE_INCLUDE_PATHS");
+
+		    
+
+        }
+
+		
 
         if (Target.Platform == UnrealTargetPlatform.Win64)
         {
 			
 			Console.WriteLine("^In Win64 Build");
-
-            includeAdd("BOOST_160_INCLUDE");
-            includeAdd("ROS_JADE_INCLUDE_PATHS");
-
-            
-            PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_160_64_LIB")); //boost will automatically bring in static libs. 
+			includeAdd("BOOST_160_INCLUDE");			
+			PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_160_64_LIB")); //boost will automatically bring in static libs. 
+        
 
 			//ModuleDirectory + \x64\Rel-64-15\rosjadecpp-r-2015.lib"
 			
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\x64\Rel-64-15\rosjadecpp-r-2015.lib");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\x64\Rel-64-15\ROSJadeInterop-r-2015.lib"); 
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\x64\Rel-64-15\ROSActionlib-r-2015.lib");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\rosjadecpp-r-2015.lib");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\ROSJadeInterop-r-2015.lib"); 
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\ROSActionlib-r-2015.lib");
             //Notes: rebuild with tf2 is already defined collisions, all hell breaks loose
             //rebuild with tf is ok, and if you reference a tf item, you get tf2 missing items because tf calls tf2.
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\x64\Rel-64-15\TFShared-r-2015.lib");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\x64\Rel-64-15\rosbag-r-2015.lib");
-            Console.WriteLine("**"+Path.Combine(ModuleDirectory + @"\bin\x64\rosjadecpp-r-2015.dll"));
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\TFShared-r-2015.lib");
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\rosbag-r-2015.lib");
+            //Console.WriteLine("**"+Path.Combine(ModuleDirectory + @"\bin\x64\rosjadecpp-r-2015.dll"));
 
             string fname = Path.Combine(ModuleDirectory + @"\bin\x64\rosjadecpp-r-2015.dll");
             PublicDelayLoadDLLs.Add(fname);
@@ -153,34 +162,35 @@ public class ROS : ModuleRules
 
         }
 
-        if (Target.Platform == UnrealTargetPlatform.Android || Target.Platform == UnrealTargetPlatform.Win64)
-        {
-
-            
-
-        }
 
 		if (Target.Platform == UnrealTargetPlatform.Android)
         {
 			Console.WriteLine("!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################");
 
-			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnnVars");
+			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnVars");
 			
 			includeAdd("BOOST_162_INCLUDE");
             includeAdd("ROS_JADE_INCLUDE_PATHS");
-
+			
+			//apparently you put in every type and UBT will pick the correct one automatically...new to me!
+			//I have boost static libs in here as well so that they, also, might be slurped up as needed
+			//so there is libROSJadeAndroid as well as the boost.a files in these directories
+			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory + "Lib/Android/ARMv7"));
+			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory + "Lib/Android/x86"));
+			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory + "Lib/Android/arm64"));
+			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory + "Lib/Android/x64"));
 
 			string epic_install = Environment.GetEnvironmentVariable("EPIC_INSTALL");
 			string epic_android_path=Path.Combine(epic_install,@"Engine\Source\Runtime\Launch\Public\Android\");
 			
-			PublicIncludePaths.Add(epic_android_path);
+			PublicIncludePaths.Add(epic_android_path); //in order to get android header files for unreal
 			
             string PluginPath = Utils.MakePathRelativeTo(ModuleDirectory, BuildConfiguration.RelativeEnginePath);
             AdditionalPropertiesForReceipt.Add(new ReceiptProperty("AndroidPlugin", Path.Combine(PluginPath, "GameActivityInsert.xml"))); //../../../../repos/UDPUnreal\Source\UDPSendReceive\GregAndroidTest1.xml
             Console.WriteLine("^Path {0}:", Path.Combine(PluginPath, "GameActivityInsert.xml"));
 
 			//need to figure out how to know WHICH libraries to bring in.
-			
+			PublicAdditionalLibraries.Add("libROSJadeAndroid.so");
 
 			
 	
