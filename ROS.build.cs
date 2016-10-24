@@ -160,9 +160,33 @@ public class ROS : ModuleRules
 
         }
 
+		if (Target.Platform == UnrealTargetPlatform.Android)
+        {
+			Console.WriteLine("!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################");
+
+			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnnVars");
+			
+			includeAdd("BOOST_162_INCLUDE");
+            includeAdd("ROS_JADE_INCLUDE_PATHS");
 
 
-        if (Target.Platform == UnrealTargetPlatform.Android)
+			string epic_install = Environment.GetEnvironmentVariable("EPIC_INSTALL");
+			string epic_android_path=Path.Combine(epic_install,@"Engine\Source\Runtime\Launch\Public\Android\");
+			
+			PublicIncludePaths.Add(epic_android_path);
+			
+            string PluginPath = Utils.MakePathRelativeTo(ModuleDirectory, BuildConfiguration.RelativeEnginePath);
+            AdditionalPropertiesForReceipt.Add(new ReceiptProperty("AndroidPlugin", Path.Combine(PluginPath, "GameActivityInsert.xml"))); //../../../../repos/UDPUnreal\Source\UDPSendReceive\GregAndroidTest1.xml
+            Console.WriteLine("^Path {0}:", Path.Combine(PluginPath, "GameActivityInsert.xml"));
+
+			//need to figure out how to know WHICH libraries to bring in.
+			
+
+			
+	
+		}
+		
+        if (false) //the old android stuff for reference
         {
 			Console.WriteLine("!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################");
 
@@ -184,32 +208,13 @@ public class ROS : ModuleRules
             PublicIncludePaths.Add(Path.Combine(root, @"ros-android-src\ros-android\ros\src\geometry"));
             PublicIncludePaths.Add(Path.Combine(root, @"ros\install_isolated\include"));
 
-//Engine\Source\Runtime\Launch\Public\Android\AndroidJNI.h
-            //string s=root+   @"\ros\install_isolated\include\include_generated";
-            //PublicIncludePaths.Add(s); //untested
-            //C:\androidlibs\boost-android\boost_1_55_0\boost\math\special_functions\round.hpp
-            //s=root+@"\boost-android\boost_1_55_0";
-            //Console.WriteLine("*&*&*&*&*" + s);
-            //PublicIncludePaths.Add(Path.Combine(root, @"ros-android-src\ros-android\ros\install_isolated\include\"));
-            //C:\androidlibs\ros - android - src\ros - android\ros\install_isolated\include\
 
-
-
-
-
-
-            //   PrivateDependencyModuleNames.AddRange(new string[] { "OculusMobile" });
-            //    PublicIncludePaths.Add("c:/NVPACK/android-ndk-r10e/platforms/android-21/arch-arm/usr/include");
 
             string PluginPath = Utils.MakePathRelativeTo(ModuleDirectory, BuildConfiguration.RelativeEnginePath);
             AdditionalPropertiesForReceipt.Add(new ReceiptProperty("AndroidPlugin", Path.Combine(PluginPath, "GameActivityInsert.xml"))); //../../../../repos/UDPUnreal\Source\UDPSendReceive\GregAndroidTest1.xml
             Console.WriteLine("^Path {0}:", Path.Combine(PluginPath, "GameActivityInsert.xml"));
 
-            //ThirdParty in this case is relative to our module directory which gets interpreted often as: 'C:/repos/android/ROS/ThirdParty/' per the above properties
 
-            //remove this library to keep things local so I can debug and change 
-            //string p = ThirdPartyPath + @"ROS\lib\armeabi-v7a\libAndroidTalkerDemo.so";
-            //PublicAdditionalLibraries.Add(p);
 
             string p;
 
