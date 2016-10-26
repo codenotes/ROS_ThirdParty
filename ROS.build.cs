@@ -165,8 +165,11 @@ public class ROS : ModuleRules
 
 		if (Target.Platform == UnrealTargetPlatform.Android)
         {
-			Console.WriteLine("!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################");
+			Console.WriteLine("^!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################");
 
+			
+			string ModDir = UEBuildConfiguration.UEThirdPartySourceDirectory + "ROS/";
+			
 			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnVars");
 			
 			includeAdd("BOOST_162_INCLUDE");
@@ -175,11 +178,14 @@ public class ROS : ModuleRules
 			//apparently you put in every type and UBT will pick the correct one automatically...new to me!
 			//I have boost static libs in here as well so that they, also, might be slurped up as needed
 			//so there is libROSJadeAndroid as well as the boost.a files in these directories
-			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory + "Lib/Android/ARMv7"));
-			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory + "Lib/Android/x86"));
-			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory + "Lib/Android/arm64"));
-			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory + "Lib/Android/x64"));
+			PublicLibraryPaths.Add(ModuleDirectory+ "/Lib/Android/ARMv7");
+			PublicLibraryPaths.Add(ModuleDirectory+ "/Lib/Android/x86");
+			PublicLibraryPaths.Add(ModuleDirectory+ "/Lib/Android/ARM64");
+			PublicLibraryPaths.Add(ModuleDirectory+"/Lib/Android/x64");
 
+			Console.WriteLine("^DEBUG ROS: "+ModuleDirectory+"---"+ "/Lib/Android/ARMv7");
+			
+			
 			string epic_install = Environment.GetEnvironmentVariable("EPIC_INSTALL");
 			string epic_android_path=Path.Combine(epic_install,@"Engine\Source\Runtime\Launch\Public\Android\");
 			
@@ -190,7 +196,7 @@ public class ROS : ModuleRules
             Console.WriteLine("^Path {0}:", Path.Combine(PluginPath, "GameActivityInsert.xml"));
 
 			//need to figure out how to know WHICH libraries to bring in.
-			PublicAdditionalLibraries.Add("libROSJadeAndroid.so");
+			PublicAdditionalLibraries.Add("ROSJadeAndroid");
 
 			
 	
