@@ -112,33 +112,59 @@ public class ROS : ModuleRules
 							);
 		}
 
-       // bUseRTTI = true; //oh so very important...lets boost dynamic cast return horror to the client. /GR
+        bUseRTTI = true; //oh so very important...lets boost dynamic cast return horror to the client. /GR
         UEBuildConfiguration.bForceEnableExceptions = true;
 
         //BOOST_REGEX_NO_EXTERNAL_TEMPLATES
-        var ros_preproc = "OPENCV;_NO_FTDI;BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY;GREG1;BOOST_LIB_DIAGNOSTIC";// ;BOOST_LIB_DIAGNOSTIC";
+        var ros_preproc = "OPENCV;_NO_FTDI;GREG1;BOOST_LIB_DIAGNOSTIC";// ;BOOST_LIB_DIAGNOSTIC";BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY;BOOST_NO_RTTI;BOOST_NO_TYPEID
         addPreproc(ros_preproc);
 
 		
         if (Target.Platform == UnrealTargetPlatform.Android || Target.Platform == UnrealTargetPlatform.Win64)
         {
 
-           
+           	includeAdd("BOOST_162_INCLUDE");
             includeAdd("ROS_JADE_INCLUDE_PATHS");
+			
 
 		    
 
         }
 
 		
+		   if (Target.Platform == UnrealTargetPlatform.Win64)
+        {
+			
+			Console.WriteLine("^In Win64 Build/Single DLL ROSWindowsJade.dll");
+			PublicLibraryPaths.Add("BOOST_162_64_LIB");
+			
+			PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_162_64_LIB")); //boost will automatically bring in static libs. 
+        
 
+			//ModuleDirectory + \x64\Rel-64-15\rosjadecpp-r-2015.lib"
+			string lib=ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\ROSWindowsJade.lib";
+            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\ROSWindowsJade.lib");
+			Console.WriteLine(lib);
+            
+            string fname = Path.Combine(ModuleDirectory + @"\bin\x64\ROSWindowsJade.dll");
+            PublicDelayLoadDLLs.Add(fname);
+            RuntimeDependencies.Add(new RuntimeDependency(fname));
+			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\Windows\x64\ROSWindowsJade.dll")));
+			
+
+
+        }
+		/*
+		
+ //this is the old and working windows section, but we are going to start trying to work with that single dll like android. 
         if (Target.Platform == UnrealTargetPlatform.Win64)
         {
 			
 			Console.WriteLine("^In Win64 Build");
-			includeAdd("BOOST_160_INCLUDE");			
-			PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_160_64_LIB")); //boost will automatically bring in static libs. 
-        
+			
+	//		includeAdd("BOOST_160_INCLUDE");			
+			PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_162_64_LIB")); //boost will automatically bring in static libs. 
+			//PublicLibraryPaths.Add(@"G:\include\boost_1_62_0\boost_1_62_0\stage\lib_BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY\lib");
 
 			//ModuleDirectory + \x64\Rel-64-15\rosjadecpp-r-2015.lib"
 			
@@ -162,21 +188,21 @@ public class ROS : ModuleRules
 
         }
 
-
+*/
 		if (Target.Platform == UnrealTargetPlatform.Android)
         {
-			Console.WriteLine("^!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################");
+			Console.WriteLine("^^^^Android ROS section started.........");
 
 			
 			string ModDir = UEBuildConfiguration.UEThirdPartySourceDirectory + "ROS/";
 			
 			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnVars");
 			
-			includeAdd("BOOST_162_INCLUDE");
-            includeAdd("ROS_JADE_INCLUDE_PATHS");
+			//includeAdd("BOOST_162_INCLUDE");
+           // includeAdd("ROS_JADE_INCLUDE_PATHS");
 			
 			//apparently you put in every type and UBT will pick the correct one automatically...new to me!
-			//I have boost static libs in here as well so that they, also, might be slurped up as needed
+			//I have BOOST static libs in here as well so that they, also, might be slurped up as needed
 			//so there is libROSJadeAndroid as well as the boost.a files in these directories
 			PublicLibraryPaths.Add(ModuleDirectory+ "/Lib/Android/ARMv7");
 			PublicLibraryPaths.Add(ModuleDirectory+ "/Lib/Android/x86");
