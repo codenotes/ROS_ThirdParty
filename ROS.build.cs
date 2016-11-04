@@ -123,7 +123,8 @@ public class ROS : ModuleRules
         if (Target.Platform == UnrealTargetPlatform.Android || Target.Platform == UnrealTargetPlatform.Win64)
         {
 
-           	includeAdd("BOOST_162_INCLUDE");
+           	//includeAdd("BOOST_162_INCLUDE");
+			PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_162_INCLUDE")); 
             includeAdd("ROS_JADE_INCLUDE_PATHS");
 			
 
