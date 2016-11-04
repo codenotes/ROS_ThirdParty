@@ -124,7 +124,7 @@ public class ROS : ModuleRules
         {
 
            	//includeAdd("BOOST_162_INCLUDE");
-			PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_162_INCLUDE")); 
+			PublicIncludePaths.Add(Environment.GetEnvironmentVariable("BOOST_162_INCLUDE")); 
             includeAdd("ROS_JADE_INCLUDE_PATHS");
 			
 
