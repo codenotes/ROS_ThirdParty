@@ -55,6 +55,16 @@
 	import java.net.InetAddress;
 	import java.net.UnknownHostException;
 	import java.math.BigInteger;
+	
+	
+	import android.net.nsd.NsdManager;
+    import android.net.nsd.NsdManager.DiscoveryListener;
+    import android.net.nsd.NsdManager.ResolveListener;
+    import android.net.nsd.NsdServiceInfo;
+    import android.util.Log;
+    import java.util.HashMap;
+	
+	
 	import com.Infusion.TailForGreg.*;
 
 	</insert>
@@ -64,8 +74,32 @@
   <!-- optional additions to the GameActivity class in GameActivity.java -->
   <gameActivityClassAdditions>
     <insert>
+	
+	FindServicesNSD mFindService;
+	
+	
+	public void AndroidThunkJava_startDNSD(String proto)
+	{
+			//"_http._tcp" //this was the proto arg below 
+			//Log.d("FindServicesNSD", "^Anything here2");
+			mFindService=new FindServicesNSD((NsdManager)getSystemService(NSD_SERVICE), proto);
+			mFindService.run();
+
+	}
+
+
+	 public   String AndroidThunkJava_getDNSDResolution(String name)//Context context)
+	 {
+			String res=mFindService.getResolution(name);
+
+			return res;
+	 }
+	
+	
+	
    public static boolean AndroidThunkJava_Test1()
 	{
+		
 		return true;
 	}
 	

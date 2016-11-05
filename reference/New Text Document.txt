@@ -1,0 +1,1 @@
+need to call do.bat 1.7 so that dexer will not give 52 error.
