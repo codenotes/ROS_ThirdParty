@@ -136,7 +136,7 @@ public class ROS : ModuleRules
         {
 			
 			Console.WriteLine("^In Win64 Build/Single DLL ROSWindowsJade.dll");
-			PublicLibraryPaths.Add("BOOST_162_64_LIB");
+		//	PublicLibraryPaths.Add("BOOST_162_64_LIB");
 			
 			PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_162_64_LIB")); //boost will automatically bring in static libs. 
         
