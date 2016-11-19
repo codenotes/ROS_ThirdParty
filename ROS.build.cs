@@ -135,7 +135,7 @@ public class ROS : ModuleRules
 		
 		   if (Target.Platform == UnrealTargetPlatform.Win64)
         {
-			
+			UEBuildConfiguration.bForceEnableExceptions = true;
 			Console.WriteLine("^In Win64 Build/Single DLL ROSWindowsJade.dll");
 		//	PublicLibraryPaths.Add("BOOST_162_64_LIB");
 			
