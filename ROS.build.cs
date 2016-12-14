@@ -116,7 +116,7 @@ public class ROS : ModuleRules
         UEBuildConfiguration.bForceEnableExceptions = true;
 
         //BOOST_REGEX_NO_EXTERNAL_TEMPLATES
-        var ros_preproc = "OPENCV;_NO_FTDI;GREG1;BOOST_LIB_DIAGNOSTIC;ROSCONSOLE_PACKAGE_NAME=TailForGreg";// ;BOOST_LIB_DIAGNOSTIC";BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY;BOOST_NO_RTTI;BOOST_NO_TYPEID
+        var ros_preproc = "OPENCV;_NO_FTDI;GREG1;BOOST_LIB_DIAGNOSTIC";//;BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY;BOOST_NO_RTTI;BOOST_NO_TYPEID
         addPreproc(ros_preproc);
 
 		
@@ -147,7 +147,7 @@ public class ROS : ModuleRules
             PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\ROSWindowsJade.lib");
 			Console.WriteLine(lib);
             
-            string fname = Path.Combine(ModuleDirectory + @"\bin\x64\ROSWindowsJade.dll");
+            string fname = Path.Combine(ModuleDirectory + @"\bin\Windows\x64\ROSWindowsJade.dll");
             PublicDelayLoadDLLs.Add(fname);
             RuntimeDependencies.Add(new RuntimeDependency(fname));
 			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\Windows\x64\ROSWindowsJade.dll")));
