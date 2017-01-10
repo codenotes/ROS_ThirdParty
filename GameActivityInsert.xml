@@ -26,16 +26,32 @@
   
   
    		<isArch arch="armeabi-v7a">
-			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARMv7\libROSJadeAndroid.so"
-							dst="$S(BuildDir)\libs\armeabi-v7a\libROSJadeAndroid.so" />
-
-			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\java\ue4utils.jar"
-							dst="$S(BuildDir)\libs\ue4utils.jar" />			
+			  <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARMv7\libROSJadeAndroid.so"
+							  dst="$S(BuildDir)\libs\armeabi-v7a\libROSJadeAndroid.so" />
+        <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARMv7\libglib-2.0.so"
+							  dst="$S(BuildDir)\libs\armeabi-v7a\libglib-2.0.so" />
+        <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARMv7\libgobject-2.0.so"
+							  dst="$S(BuildDir)\libs\armeabi-v7a\libgobject-2.0.so" />
+        <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARMv7\libgstreamer-1.0.so"
+							  dst="$S(BuildDir)\libs\armeabi-v7a\libgstreamer-1.0.so" />
+        
+        
+			  <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\java\ue4utils.jar"
+							  dst="$S(BuildDir)\libs\ue4utils.jar" />			
 					</isArch>		
 						
 		<isArch arch="arm64-v8a">
 			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libROSJadeAndroid.so"
 						dst="$S(BuildDir)\libs\arm64-v8a\libROSJadeAndroid.so" />
+
+      <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libglib-2.0.so"
+        dst="$S(BuildDir)\libs\armeabi-v7a\libglib-2.0.so" />
+      <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libgobject-2.0.so"
+              dst="$S(BuildDir)\libs\armeabi-v7a\libgobject-2.0.so" />
+      <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libgstreamer-1.0.so"
+              dst="$S(BuildDir)\libs\armeabi-v7a\libgstreamer-1.0.so" />
+      
+      
 
 			<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\java\ue4utils.jar"
 						dst="$S(BuildDir)\libs\ue4utils.jar" />			
