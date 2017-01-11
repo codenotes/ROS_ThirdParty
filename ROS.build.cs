@@ -6,6 +6,7 @@ using System;
 
 public class ROS : ModuleRules
 {
+    bool bUseGstreamer = true;
     private string ModulePath
     {
         get { return ModuleDirectory; }
@@ -98,25 +99,30 @@ public class ROS : ModuleRules
 						}
 					);
 
-					
+				//PublicIncludePaths.AddRange(
+				//			new string[] {
+				//				@"C:\Program Files (x86)\Epic Games\4.12\Engine\Source\Runtime\Launch\Public\Android", //laptop on couch
+				//				@"C:\Program Files\Epic Games\4.12\Engine\Source\Runtime\Launch\Public\Android", //home office machine
+				//			 // "C:/Users/gbrill/Source/Repos/UnrealEngine/Engine/Source/Runtime/Core/Public/Android",
+				//			  "../../../../Source/Runtime/Launch/Public/Android"
 
-
-				PublicIncludePaths.AddRange(
-							new string[] {
-								@"C:\Program Files (x86)\Epic Games\4.12\Engine\Source\Runtime\Launch\Public\Android", //laptop on couch
-								@"C:\Program Files\Epic Games\4.12\Engine\Source\Runtime\Launch\Public\Android", //home office machine
-							 // "C:/Users/gbrill/Source/Repos/UnrealEngine/Engine/Source/Runtime/Core/Public/Android",
-							  "../../../../Source/Runtime/Launch/Public/Android"
-
-							}
-							);
+				//			}
+				//			);
 		}
 
         bUseRTTI = true; //oh so very important...lets boost dynamic cast return horror to the client. /GR
         UEBuildConfiguration.bForceEnableExceptions = true;
 
         //BOOST_REGEX_NO_EXTERNAL_TEMPLATES
+
         var ros_preproc = "OPENCV;_NO_FTDI;GREG1;BOOST_LIB_DIAGNOSTIC;_SCL_SECURE_NO_WARNINGS";//;BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY;BOOST_NO_RTTI;BOOST_NO_TYPEID
+
+        if (bUseGstreamer)
+        {
+            Console.WriteLine("USING GSTREAMER...");
+            ros_preproc += ";USE_GSTREAMER";
+        }
+
         addPreproc(ros_preproc);
 
 		
@@ -126,7 +132,8 @@ public class ROS : ModuleRules
            	//includeAdd("BOOST_162_INCLUDE");
 			PublicIncludePaths.Add(Environment.GetEnvironmentVariable("BOOST_162_INCLUDE")); 
             includeAdd("ROS_JADE_INCLUDE_PATHS");
-			
+
+          
 
 		    
 
@@ -137,60 +144,69 @@ public class ROS : ModuleRules
         {
 			UEBuildConfiguration.bForceEnableExceptions = true;
 			Console.WriteLine("^In Win64 Build/Single DLL ROSWindowsJade.dll");
-		//	PublicLibraryPaths.Add("BOOST_162_64_LIB");
 			
 			PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_162_64_LIB")); //boost will automatically bring in static libs. 
         
-
-			//ModuleDirectory + \x64\Rel-64-15\rosjadecpp-r-2015.lib"
 			string lib=ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\ROSWindowsJade.lib";
             PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\ROSWindowsJade.lib");
-			Console.WriteLine(lib);
-            
+            Console.WriteLine(lib);
             string fname = Path.Combine(ModuleDirectory + @"\bin\Windows\x64\ROSWindowsJade.dll");
             PublicDelayLoadDLLs.Add(fname);
             RuntimeDependencies.Add(new RuntimeDependency(fname));
-			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\Windows\x64\ROSWindowsJade.dll")));
-			
+
+            if (bUseGstreamer)
+            {
+
+                //include paths for GSTREAMER
+                var env = Environment.GetEnvironmentVariable("GSTREAMER_WINDOWS");
+
+                Console.WriteLine("GSTREAMER WINDOWS ENVAR IS:{0}", env);
+
+                var gstreamerIncludes = new string[]
+                {
+                @"\include\gstreamer-1.0",
+                @"\include\glib-2.0",
+                @"\lib\glib-2.0\include"
+                };
+
+                foreach (string l in gstreamerIncludes)
+                {
+                    Console.WriteLine("Adding gstreamerpaths:");
+                    PublicIncludePaths.Add(env + l);
+                    Console.WriteLine(env + l);
+
+                    if (!Directory.Exists(env + l))
+                    {
+                        Console.WriteLine("Whoa...this path doesn't exist, lets stop this now...");
+                        throw new System.Exception("bad include");
+                    }
+                }
+
+                //link libraries for GSTREAMER
+                PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, @"\Lib\Windows\x64\Rel-64-15\gstreamer-1.0.lib"));
+                PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, @"\Lib\Windows\x64\Rel-64-15\gobject-2.0.lib"));
+                PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, @"\Lib\Windows\x64\Rel-64-15\glib-2.0.lib"));
+
+                //dependent DLLS so we can package this when the time comes (have run windepends on these and should be complete group)
+                var gstreamerLibs = new string[] {
+                                    "libffi-6.dll",
+                                    "libglib-2.0-0.dll",
+                                    "libgmodule-2.0-0.dll",
+                                    "libgstreamer-1.0-0.dll",
+                                    "libintl-8.dll",
+                                    "libwinpthread-1.dll"
+                                        };
+
+                foreach (string l in gstreamerLibs)
+                {
+                    RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory, l)));
+                }
+            }
 
 
         }
-		/*
-		
- //this is the old and working windows section, but we are going to start trying to work with that single dll like android. 
-        if (Target.Platform == UnrealTargetPlatform.Win64)
-        {
-			
-			Console.WriteLine("^In Win64 Build");
-			
-	//		includeAdd("BOOST_160_INCLUDE");			
-			PublicLibraryPaths.Add(Environment.GetEnvironmentVariable("BOOST_162_64_LIB")); //boost will automatically bring in static libs. 
-			//PublicLibraryPaths.Add(@"G:\include\boost_1_62_0\boost_1_62_0\stage\lib_BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY\lib");
 
-			//ModuleDirectory + \x64\Rel-64-15\rosjadecpp-r-2015.lib"
-			
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\rosjadecpp-r-2015.lib");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\ROSJadeInterop-r-2015.lib"); 
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\ROSActionlib-r-2015.lib");
-            //Notes: rebuild with tf2 is already defined collisions, all hell breaks loose
-            //rebuild with tf is ok, and if you reference a tf item, you get tf2 missing items because tf calls tf2.
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\TFShared-r-2015.lib");
-            PublicAdditionalLibraries.Add(ModuleDirectory + @"\Lib\Windows\x64\Rel-64-15\rosbag-r-2015.lib");
-            //Console.WriteLine("**"+Path.Combine(ModuleDirectory + @"\bin\x64\rosjadecpp-r-2015.dll"));
-
-            string fname = Path.Combine(ModuleDirectory + @"\bin\x64\rosjadecpp-r-2015.dll");
-            PublicDelayLoadDLLs.Add(fname);
-            RuntimeDependencies.Add(new RuntimeDependency(fname));
-			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\x64\ROSJadeInterop-r-2015.dll")));
-			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\x64\ROSActionlib-r-2015.dll")));
-			RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\x64\TFShared-r-2015.dll")));
-            RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory + @"\bin\x64\rosbag-r-2015.dll")));
-
-
-        }
-
-*/
-		if (Target.Platform == UnrealTargetPlatform.Android)
+        if (Target.Platform == UnrealTargetPlatform.Android)
         {
 			Console.WriteLine("^^^^Android ROS section started.........");
 
@@ -199,8 +215,7 @@ public class ROS : ModuleRules
 			
 			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnVars");
 			
-			//includeAdd("BOOST_162_INCLUDE");
-           // includeAdd("ROS_JADE_INCLUDE_PATHS");
+
 			
 			//apparently you put in every type and UBT will pick the correct one automatically...new to me!
 			//I have BOOST static libs in here as well so that they, also, might be slurped up as needed
