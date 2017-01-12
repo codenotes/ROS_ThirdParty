@@ -164,16 +164,15 @@ public class ROS : ModuleRules
 
                 var gstreamerIncludes = new string[]
                 {
-                @"\include\gstreamer-1.0",
-                @"\include\glib-2.0",
-                @"\lib\glib-2.0\include"
+                    @"\include\gstreamer-1.0",
+                    @"\include\glib-2.0",
+                    @"\lib\glib-2.0\include"
                 };
 
                 foreach (string l in gstreamerIncludes)
                 {
-                    Console.WriteLine("Adding gstreamerpaths:");
                     PublicIncludePaths.Add(env + l);
-                    Console.WriteLine(env + l);
+                    Console.WriteLine("Adding gstreamerpaths:{0}",env + l);
 
                     if (!Directory.Exists(env + l))
                     {
@@ -182,11 +181,30 @@ public class ROS : ModuleRules
                     }
                 }
 
-                //link libraries for GSTREAMER
-                PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, @"\Lib\Windows\x64\Rel-64-15\gstreamer-1.0.lib"));
-                PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, @"\Lib\Windows\x64\Rel-64-15\gobject-2.0.lib"));
-                PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, @"\Lib\Windows\x64\Rel-64-15\glib-2.0.lib"));
+                var gstreamerDllLinks = new string[]
+                {
+                    @"\Lib\Windows\x64\Rel-64-15\gstreamer-1.0.lib",
+                    @"\Lib\Windows\x64\Rel-64-15\gobject-2.0.lib",
+                    @"\Lib\Windows\x64\Rel-64-15\glib-2.0.lib"
+                };
 
+                string tmp;
+                foreach(string l in gstreamerDllLinks)
+                {
+                    tmp = ModuleDirectory + l;
+                    PublicAdditionalLibraries.Add(tmp);
+                    Console.WriteLine("Dll Link added:{0}", tmp);
+
+                    if (!File.Exists(tmp))
+                    {
+                        Console.WriteLine("Whoa...this library doesn't exist, lets stop this now...");
+                        throw new System.Exception("bad lib");
+                    }
+
+
+                }
+                //link libraries for GSTREAMER
+                
                 //dependent DLLS so we can package this when the time comes (have run windepends on these and should be complete group)
                 var gstreamerLibs = new string[] {
                                     "libffi-6.dll",
