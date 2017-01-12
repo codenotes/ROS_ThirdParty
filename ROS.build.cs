@@ -207,17 +207,17 @@ public class ROS : ModuleRules
                 
                 //dependent DLLS so we can package this when the time comes (have run windepends on these and should be complete group)
                 var gstreamerLibs = new string[] {
-                                    "libffi-6.dll",
-                                    "libglib-2.0-0.dll",
-                                    "libgmodule-2.0-0.dll",
-                                    "libgstreamer-1.0-0.dll",
-                                    "libintl-8.dll",
-                                    "libwinpthread-1.dll"
+                                    "/libffi-6.dll",
+                                    "/libglib-2.0-0.dll",
+                                    "/libgmodule-2.0-0.dll",
+                                    "/libgstreamer-1.0-0.dll",
+                                    "/libintl-8.dll",
+                                    "/libwinpthread-1.dll"
                                         };
 
                 foreach (string l in gstreamerLibs)
                 {
-                    RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(ModuleDirectory, l)));
+                    RuntimeDependencies.Add(new RuntimeDependency(ModuleDirectory+ l));
                 }
             }
 
