@@ -177,7 +177,7 @@ public class ROS : ModuleRules
                     if (!Directory.Exists(env + l))
                     {
                         Console.WriteLine("Whoa...this path doesn't exist, lets stop this now...");
-                        throw new System.Exception("bad include");
+                   //     throw new System.Exception("bad include");
                     }
                 }
 
@@ -232,13 +232,51 @@ public class ROS : ModuleRules
 			string ModDir = UEBuildConfiguration.UEThirdPartySourceDirectory + "ROS/";
 			
 			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnVars");
-			
 
-			
-			//apparently you put in every type and UBT will pick the correct one automatically...new to me!
-			//I have BOOST static libs in here as well so that they, also, might be slurped up as needed
-			//so there is libROSJadeAndroid as well as the boost.a files in these directories
-			PublicLibraryPaths.Add(ModuleDirectory+ "/Lib/Android/ARMv7");
+            if (bUseGstreamer)
+            {
+
+                //include paths for GSTREAMER
+                var env = Environment.GetEnvironmentVariable("GSTREAMER_ANDROID");
+
+                Console.WriteLine("GSTREAMER ANDROID ENVAR IS:{0}", env); //usually G:\gstreamer-1.0-android-arm-1.11.0
+
+                var gstreamerIncludes = new string[]
+                {
+                    @"/include",
+                    @"/include/glib-2.0",
+                    @"/lib/glib-2.0/include",
+                    @"/include/gstreamer-1.0"
+
+
+                };
+
+                foreach (string l in gstreamerIncludes)
+                {
+                    PublicIncludePaths.Add(env + l);
+                    Console.WriteLine("Adding gstreamerpaths:{0}", env + l);
+
+                    if (!Directory.Exists(env + l))
+                    {
+                        Console.WriteLine("Whoa...this path doesn't exist, lets stop this now...");
+                        throw new System.Exception("bad include");
+                    }
+                }
+
+
+             
+
+
+
+
+                }
+
+
+
+                //apparently you put in every type and UBT will pick the correct one automatically...new to me!
+                //I have BOOST static libs in here as well so that they, also, might be slurped up as needed
+                //so there is libROSJadeAndroid as well as the boost.a files in these directories
+            PublicLibraryPaths.Add(ModuleDirectory+ "/Lib/Android/ARMv7");
 			PublicLibraryPaths.Add(ModuleDirectory+ "/Lib/Android/x86");
 			PublicLibraryPaths.Add(ModuleDirectory+ "/Lib/Android/ARM64");
 			PublicLibraryPaths.Add(ModuleDirectory+"/Lib/Android/x64");
@@ -257,6 +295,39 @@ public class ROS : ModuleRules
 
 			//need to figure out how to know WHICH libraries to bring in.
 			PublicAdditionalLibraries.Add("ROSJadeAndroid");
+
+            if(bUseGstreamer)
+            {
+
+
+                var gstreamerSOLinks = new string[]
+                 {
+                    @"gstreamer-1.0",
+                    @"gobject-2.0",
+                    @"glib-2.0"
+                };
+
+                //string tmp;
+                foreach (string l in gstreamerSOLinks)
+                {
+                   // tmp = ModuleDirectory + l;
+                    PublicAdditionalLibraries.Add(l);
+                    Console.WriteLine("android .so Link added:{0}", l);
+
+                    //if (!File.Exists(tmp))
+                    //{
+                    //    Console.WriteLine("Whoa...this library doesn't exist, lets stop this now...");
+                    //    //     throw new System.Exception("bad lib");
+                    //}
+
+                }
+
+
+
+
+            }
+
+
 
 			
 	
