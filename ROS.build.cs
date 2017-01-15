@@ -302,16 +302,53 @@ public class ROS : ModuleRules
 
                 var gstreamerSOLinks = new string[]
                  {
-                    @"gstreamer-1.0",
-                    @"gobject-2.0",
-                    @"glib-2.0"
-                };
+                    @"libgstreamer-1.0.so",
+                    @"libgobject-2.0.so",
+                    @"libglib-2.0.so",
+                    @"libffi.so",
+                    @"libgmodule-2.0.so",
+                    @"libintl.so",
+					//@"libiconv.so.2",
+					@"libiconv.so"
 
-                //string tmp;
-                foreach (string l in gstreamerSOLinks)
+
+                };
+				
+				 var gstreamerStaticLinks = new string[]
+                 {
+                    // @"libgstreamer-1.0.a",
+                    // @"libgobject-2.0.a",
+                    // @"libglib-2.0.a",
+                    // @"libffi.a",
+                    // @"libgmodule-2.0.a",
+                    // @"libintl.a",
+					// @"libiconv.a"
+
+
+                };
+				
+
+                string tmp;
+                foreach (string l in gstreamerStaticLinks)
                 {
-                   // tmp = ModuleDirectory + l;
-                    PublicAdditionalLibraries.Add(l);
+                    tmp = ModuleDirectory + "/Lib/Android/ARMv7/";
+		   
+                    PublicAdditionalLibraries.Add(tmp+l);
+                    Console.WriteLine("android .a Link added:{0}", l);
+
+                    //if (!File.Exists(tmp))
+                    //{
+                    //    Console.WriteLine("Whoa...this library doesn't exist, lets stop this now...");
+                    //    //     throw new System.Exception("bad lib");
+                    //}
+
+                }
+				
+				   foreach (string l in gstreamerSOLinks)
+                {
+                    tmp = ModuleDirectory + "/Lib/Android/ARMv7/";
+		   
+                    PublicAdditionalLibraries.Add(tmp+l);
                     Console.WriteLine("android .so Link added:{0}", l);
 
                     //if (!File.Exists(tmp))
@@ -321,6 +358,8 @@ public class ROS : ModuleRules
                     //}
 
                 }
+				
+				
 
 
 
