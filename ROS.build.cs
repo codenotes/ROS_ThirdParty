@@ -299,6 +299,9 @@ public class ROS : ModuleRules
             if(bUseGstreamer)
             {
 
+//right now we are explicit and including complete paths and complete file names...but I need to go back to the way it was where the include path present will automatically
+//select correct library.  This was when I was solving for that versioining shared library problem and I used RPL to solve it. 
+//we don't want to leave it this way. 
 
                 var gstreamerSOLinks = new string[]
                  {
