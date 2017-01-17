@@ -84,7 +84,7 @@ public class ROS : ModuleRules
     }
 
     //takes raw path and complete lib filename and links with that, ie, c:\somepath\somelib.a
-    public void linkCompletePathLib(string[] libNames, LinkTypes linkType)
+    public void linkCompletePathLib(string[] libNames, LinkTypes linkType, string prefix)
     {
 
         string tmp;
@@ -92,12 +92,12 @@ public class ROS : ModuleRules
         foreach (string l in libNames)
         {
 
-            PublicAdditionalLibraries.Add(l);
+            PublicAdditionalLibraries.Add(prefix + l);
 
             if (linkType == LinkTypes.Static)
-                Console.WriteLine("Library(Complete Path) .a linked:{0}", l);
+                Console.WriteLine("Library(Complete Path) .a linked:{0}", prefix+l);
             else
-                Console.WriteLine("Library(Complete Path) .so linked:{0}", l);
+                Console.WriteLine("Library(Complete Path) .so linked:{0}", prefix + l);
 
         }
     }
@@ -385,125 +385,31 @@ public class ROS : ModuleRules
 
                 var gstreamerStaticCompletePathLinks = new string[]
                  {
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libz.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/liba52.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libass.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libavcodec.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libavfilter.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libavformat.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libavutil.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libbz2.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libcairo.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libcairo-gobject.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libcairo-script-interpreter.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libcharset.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libcroco-0.6.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libdca.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libdv.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libexpat.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libfaad.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libffi.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libFLAC.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libfontconfig.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libfreetype.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libfribidi.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgdk_pixbuf-2.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libges-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgio-2.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libglib-2.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgmodule-2.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgmp.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgnustl.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgnutls.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgobject-2.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgraphene-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstadaptivedemux-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstallocators-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstapp-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstaudio-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstbadaudio-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstbadbase-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstbadvideo-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstbase-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstbasecamerabinsrc-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstcheck-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstcodecparsers-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstcontroller-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstfft-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstgl-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstinsertbin-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstmpegts-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstnet-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstpbutils-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstphotography-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstplayer-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstreamer-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstriff-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstrtp-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstrtsp-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstrtspserver-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstsdp-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgsttag-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgsturidownloader-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstvalidate-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgstvideo-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libgthread-2.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libharfbuzz.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libhogweed.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libiconv.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libintl.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libjpeg.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libjson-glib-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libkate.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libmms.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libmp3lame.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libmpeg2.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libmpeg2convert.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libmpg123.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libnettle.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libnice.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libogg.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/liboggkate.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libopencore-amrnb.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libopencore-amrwb.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libopenh264.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libopus.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/liborc-0.4.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/liborc-test-0.4.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libpango-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libpangocairo-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libpangoft2-1.0.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libpixman-1.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libpng16.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/librsvg-2.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/librtmp.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libsbc.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libSoundTouch.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libsoup-2.4.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libspandsp.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libspeex.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libsrtp.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libsupc++.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libswresample.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libswscale.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libtag.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libtasn1.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libtheora.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libtheoradec.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libtheoraenc.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libtiff.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libturbojpeg.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libvisual-0.4.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libvo-aacenc.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libvorbis.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libvorbisenc.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libvorbisfile.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libvorbisidec.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libvpx.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libwavpack.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libwebrtc_audio_processing.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libx264.a",
-@"G:/gstreamer-1.0-android-arm-1.11.0/lib/libxml2.a"
+
+                        @"libgstapp-1.0.a",
+                        @"libgstaudio-1.0.a",
+                        @"libgstbase-1.0.a",
+                        @"libgstreamer-1.0.a",
+                        @"libgsttag-1.0.a",
+                        @"libmp3lame.a",
+                        @"liborc-test-0.4.a",
+                        @"libgstapp-1.0.a",
+                        @"libgstaudioconvert.a",
+                        @"libgstcoreelements.a",
+                        @"libgstgio.a",
+                        @"libgstlame.a",
+                        @"libffi.a",
+                        @"libgio-2.0.a",
+                        @"libglib-2.0.a",
+                        @"libgmodule-2.0.a",
+                        @"libgobject-2.0.a",
+                        @"libintl.a",
+                        @"libiconv.a",
+                        @"libgstopensles.a",
+                        @"libgstautoconvert.a",
+                        @"libgstautodetect.a",
+                        @"libgstaudiotestsrc.a",
+                        @"liborc-0.4.a"
 
 
 
@@ -517,7 +423,7 @@ public class ROS : ModuleRules
                 linkLib(gstreamerStaticLinks, LinkTypes.Static , false);
                 linkLib(gstreamerSOLinks, LinkTypes.Dynamic,  false);
 #endif
-                linkCompletePathLib(gstreamerStaticCompletePathLinks, LinkTypes.Static);
+                linkCompletePathLib(gstreamerStaticCompletePathLinks, LinkTypes.Static,  ModuleDirectory + "/Lib/Android/ARMv7/");
 
 
             }
