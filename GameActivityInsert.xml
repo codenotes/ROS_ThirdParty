@@ -18,39 +18,7 @@
     </insert>
   </proguardAdditions>
 
-  <!-- optional files or directories to copy to Intermediate/Android/APK
-  I think buildDir is something like D:\repos\ProjectName\Intermediate\Android\APK\libs
 
-  crap:
-  	  <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libglib-2.0.so"
-							dst="$S(BuildDir)\libs\armeabi-v7a\libglib-2.0.so" />
-				  <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libgobject-2.0.so"
-							dst="$S(BuildDir)\libs\armeabi-v7a\libgobject-2.0.so" />
-				  <copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libgstreamer-1.0.so"
-							dst="$S(BuildDir)\libs\armeabi-v7a\libgstreamer-1.0.so" />
-				
-			  
-			  
-					<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libffi.so"
-								dst="$S(BuildDir)\libs\armeabi-v7a\libffi.so" />
-					<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libgmodule-2.0.so"
-								dst="$S(BuildDir)\libs\armeabi-v7a\libgmodule-2.0.so" />
-					<copyFile src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARM64\libintl.so"
-								dst="$S(BuildDir)\libs\armeabi-v7a\libintl.so" />
-  
-  
-  						<copyDir src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARMv7\gstreamer_runtime"
-									dst="$S(BuildDir)\libs\armeabi-v7a" />	
-
-						<copyDir src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARMv7\gstreamer_runtime\gio"
-									dst="$S(BuildDir)\libs\armeabi-v7a" />										
-									
-						<copyDir src="$S(EngineDir)\Source\ThirdParty\ROS\Lib\Android\ARMv7\gstreamer_runtime\gstreamer-1.0"
-									dst="$S(BuildDir)\libs\armeabi-v7a" />			
-  
-  
-  
-  -->
   <resourceCopies>
   
    		<isArch arch="armeabi-v7a">
