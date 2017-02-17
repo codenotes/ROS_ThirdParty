@@ -283,6 +283,7 @@ public class ROS : ModuleRules
 			Console.WriteLine("^^^^Android ROS section started.........");
 
 			
+			
 			string ModDir = UEBuildConfiguration.UEThirdPartySourceDirectory + "ROS/";
 			
 			Console.WriteLine("^Make sure ANDROIDLIBS_ROOT and EPIC_INSTALL are present as EnVars");
@@ -340,6 +341,10 @@ public class ROS : ModuleRules
 			 
 			string epic_install = Environment.GetEnvironmentVariable("EPIC_INSTALL");
 			string epic_android_path=Path.Combine(epic_install,@"Engine\Source\Runtime\Launch\Public\Android\");
+			
+			//G:\EpicGames\UE_4.15\Engine\Source\Runtime\Launch\Public\Android\AndroidJNI.h
+			
+			Console.WriteLine("!!!EPIC INSTALL PATH COMPLETE FOR HEADERS IS:{0}",epic_android_path);
 			
 			PublicIncludePaths.Add(epic_android_path); //in order to get android header files for unreal
 			
