@@ -360,6 +360,7 @@ public class ROS : ModuleRules
             // dlopen failed: cannot locate symbol "__gnu_thumb1_case_uqi" referenced by "libpng16.so"...
            // PublicAdditionalLibraries.Add(@"G:\NVPACK\android-ndk-r12b\toolchains\arm-linux-androideabi-4.9\prebuilt\windows-x86_64\lib\gcc\arm-linux-androideabi\4.9.x\armv7-a\libgcc.a");
 
+
             if(bUseGstreamer)
             {
 
